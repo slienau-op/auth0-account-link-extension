@@ -203,7 +203,7 @@ module.exports = ({ extensionURL = '', username = 'Unknown', clientID = '', clie
     return apiCall({
       url: config.endpoints.usersByEmailApi,
       qs: {
-        email: user.email
+        email: user.email.toLowerCase(),
       }
     });
   }
