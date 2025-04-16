@@ -101,8 +101,8 @@ module.exports = ({ extensionURL = '', username = 'Unknown', clientID = '', clie
     return verifyToken(secondAccountToken, config.token.clientSecret)
       .then(function(decodedToken) {
         // Redirect early if tokens are mismatched
-        if (user.email !== decodedToken.email) {
-          console.error(LOG_TAG, 'User: ', decodedToken.email, 'tried to link to account ', user.email);
+        if (user.email.toLowerCase() !== decodedToken.email) {
+          console.error(LOG_TAG, 'User: ', decodedToken.email, 'tried to link to account ', user.email.toLowerCase());
           context.redirect = {
             url: buildRedirectUrl(secondAccountToken, context.request.query, 'accountMismatch')
           };
@@ -137,7 +137,7 @@ module.exports = ({ extensionURL = '', username = 'Unknown', clientID = '', clie
           })
           .then(function(_) {
             // TODO: Ask about this
-            console.info(LOG_TAG, 'Successfully linked accounts for user: ', user.email);
+            console.info(LOG_TAG, 'Successfully linked accounts for user: ', user.email.toLowerCase());
             return _;
           });
       });
@@ -155,7 +155,7 @@ module.exports = ({ extensionURL = '', username = 'Unknown', clientID = '', clie
       }).map(function(user) {
         return {
           userId: user.user_id,
-          email: user.email,
+          email: user.email.toLowerCase(),
           picture: user.picture,
           connections: user.identities.map(function(identity) {
             return identity.connection;
@@ -192,7 +192,7 @@ module.exports = ({ extensionURL = '', username = 'Unknown', clientID = '', clie
 
     var userSub = {
       sub: user.user_id,
-      email: user.email,
+      email: user.email.toLowerCase(),
       base: auth0.baseUrl
     };
 
