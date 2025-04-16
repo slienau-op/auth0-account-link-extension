@@ -6,8 +6,6 @@ server/config.json
 server/config.test.json
 coverage
 .env
-dist/*.js
-dist/assets/*.css
 tags
 TAGS
 data.json
